@@ -15,7 +15,7 @@ function App() {
       justifyContent="center"
       alignItems="center"
       minHeight="100vh"
-      minWidth="100vw"
+      width="100vw"
     >
       {authToken ? (
         <DataTable host={HOST} authToken={authToken} />

@@ -96,7 +96,11 @@ export default function SignIn(props: {
         }
         console.log(data);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.log(error);
+        setPasswordError(true);
+        setPasswordErrorMessage("Server Error");
+      });
   };
 
   const validateInputs = () => {
