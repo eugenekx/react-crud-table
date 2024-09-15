@@ -53,6 +53,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 
 export default function SignIn(props: {
   disableCustomTheme?: boolean;
+  host: string;
   setAuthToken: React.Dispatch<React.SetStateAction<string | undefined>>;
 }) {
   const [usernameError, setusernameError] = React.useState(false);
@@ -63,10 +64,6 @@ export default function SignIn(props: {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get("username"),
-      password: data.get("password"),
-    });
 
     const params = {
       username: data.get("username"),
@@ -79,10 +76,7 @@ export default function SignIn(props: {
         "Content-Type": "application/json; charset=UTF-8",
       },
     };
-    const query = fetch(
-      "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/login",
-      options
-    )
+    const query = fetch(`${props.host}/data/v3/testmethods/docs/login`, options)
       .then((response) => response.json())
       .then((data) => {
         if (data.error_code === 0) {

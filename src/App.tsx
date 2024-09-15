@@ -3,10 +3,10 @@ import SignIn from "./SignIn";
 import Box from "@mui/material/Box";
 import Cookies from "js-cookie";
 
+const HOST = "https://test.v5.pryaniky.com";
+
 function App() {
   const [authToken, setAuthToken] = useState(Cookies.get("auth"));
-
-  console.log(authToken);
 
   return (
     <Box
@@ -16,7 +16,11 @@ function App() {
       minHeight="100vh"
       minWidth="100vw"
     >
-      {authToken ? <div>Table</div> : <SignIn setAuthToken={setAuthToken} />}
+      {authToken ? (
+        <div>Table</div>
+      ) : (
+        <SignIn host={HOST} setAuthToken={setAuthToken} />
+      )}
     </Box>
   );
 }
