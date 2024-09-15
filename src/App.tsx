@@ -2,6 +2,7 @@ import { useState } from "react";
 import SignIn from "./SignIn";
 import Box from "@mui/material/Box";
 import Cookies from "js-cookie";
+import DataTable from "./DataTable";
 
 const HOST = "https://test.v5.pryaniky.com";
 
@@ -17,7 +18,7 @@ function App() {
       minWidth="100vw"
     >
       {authToken ? (
-        <div>Table</div>
+        <DataTable host={HOST} authToken={authToken} />
       ) : (
         <SignIn host={HOST} setAuthToken={setAuthToken} />
       )}
