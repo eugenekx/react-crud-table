@@ -11,6 +11,7 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import AppTheme from "./AppTheme";
 import ColorModeSelect from "./ColorModeSelect";
+import Cookies from "js-cookie";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -50,7 +51,10 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-export default function SignIn(props: { disableCustomTheme?: boolean }) {
+export default function SignIn(props: {
+  disableCustomTheme?: boolean;
+  setAuthToken: React.Dispatch<React.SetStateAction<string | undefined>>;
+}) {
   const [usernameError, setusernameError] = React.useState(false);
   const [usernameErrorMessage, setusernameErrorMessage] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
@@ -63,6 +67,42 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       username: data.get("username"),
       password: data.get("password"),
     });
+
+    const params = {
+      username: data.get("username"),
+      password: data.get("password"),
+    };
+    const options = {
+      method: "POST",
+      body: JSON.stringify(params),
+      headers: {
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+    };
+    const query = fetch(
+      "https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/login",
+      options
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.error_code === 0) {
+          Cookies.set("auth", data.data.token);
+          props.setAuthToken(data.data.token);
+        } else {
+          console.error(data.error_text);
+          switch (data.error_code) {
+            case 2004:
+              setPasswordError(true);
+              setPasswordErrorMessage("Password is incorrect.");
+              break;
+            default:
+              setPasswordError(true);
+              setPasswordErrorMessage(data.error_text);
+          }
+        }
+        console.log(data);
+      })
+      .catch((error) => console.error(error));
   };
 
   const validateInputs = () => {
@@ -71,7 +111,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 
     let isValid = true;
 
-    if (!username.value || !/\S+@\S+\.\S+/.test(username.value)) {
+    if (!username.value) {
       setusernameError(true);
       setusernameErrorMessage("Please enter a valid username.");
       isValid = false;
