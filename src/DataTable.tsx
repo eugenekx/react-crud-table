@@ -327,6 +327,7 @@ export default function DataTable(props: {
         : `/ru/data/v3/testmethods/docs/userdocs/set/${newRow.id}`;
     createOrUpdateRowOnServer(newRow, url);
 
+    // TODO: if validation fails -- undo create/update row in the grid
     return updatedRow;
   };
 
@@ -371,6 +372,7 @@ export default function DataTable(props: {
       ) : (
         <Card variant="outlined">
           <DataGrid
+            autoHeight
             rows={rows}
             columns={columns}
             pageSizeOptions={[5, 10]}
