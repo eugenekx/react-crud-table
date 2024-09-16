@@ -7,7 +7,8 @@ import DataTable from "./DataTable";
 const HOST = "https://test.v5.pryaniky.com";
 
 function App() {
-  const [authToken, setAuthToken] = useState(Cookies.get("auth"));
+  // const [authToken, setAuthToken] = useState(Cookies.get("auth"));
+  const [authToken, setAuthToken] = useState("supersecrettoken_for_user8");
 
   return (
     <Box
