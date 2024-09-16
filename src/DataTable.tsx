@@ -25,7 +25,8 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import CircularProgress from "@mui/material/CircularProgress";
 import { randomId } from "@mui/x-data-grid-generator";
-import Typography from "@mui/material/Typography";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -87,8 +88,8 @@ export default function DataTable(props: {
   host: string;
   authToken: string;
 }) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isUpdatingData, setIsUpdatingData] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUpdatingData, setIsUpdatingData] = useState(true);
   const [serverError, setServerError] = useState(false);
   const [serverErrorMessage, setServerErrorMessage] = useState("");
 
@@ -388,14 +389,29 @@ export default function DataTable(props: {
               toolbar: { setRows, setRowModesModel },
             }}
           />
-          {isUpdatingData ? <CircularProgress size={20} /> : <></>}
-          {serverError ? (
-            <Typography color="error">
+          <Snackbar open={isUpdatingData} message="Updating Data...">
+            <Alert
+              severity="info"
+              color="success"
+              icon={<CircularProgress size={20} />}
+              variant="filled"
+              sx={{ width: "100%" }}
+            >
+              Updating...
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            open={serverError}
+            autoHideDuration={4000}
+            onClose={() => {
+              setServerError(false);
+              setServerErrorMessage("");
+            }}
+          >
+            <Alert severity="error" variant="filled" sx={{ width: "100%" }}>
               Server Error: {serverErrorMessage}
-            </Typography>
-          ) : (
-            <></>
-          )}
+            </Alert>
+          </Snackbar>
         </Card>
       )}
     </AppTheme>

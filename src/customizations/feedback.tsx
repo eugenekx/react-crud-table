@@ -14,8 +14,8 @@ export const feedbackCustomizations: Components<Theme> = {
           color: orange[500],
         },
         ...theme.applyStyles("dark", {
-          backgroundColor: `${alpha(orange[900], 0.5)}`,
-          border: `1px solid ${alpha(orange[800], 0.5)}`,
+          backgroundColor: `${alpha(gray[900], 1.0)}`,
+          border: `1px solid ${alpha(gray[800], 1.0)}`,
         }),
       }),
     },
