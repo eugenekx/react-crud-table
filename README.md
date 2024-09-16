@@ -1,50 +1,21 @@
-# React + TypeScript + Vite
+# Реализовать небольшое SPA-приложение взаимодействующие с сервером.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Приложение должно состоять из:
 
-Currently, two official plugins are available:
+1. Страница авторизации
+2. Таблица с данными полученными с сервера
+3. Таблица должна предоставлять CRUD операции
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Описание поведения функций приложения:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. Неавторизованный пользователь, открывая приложения должен получить предложение авторизоваться
+2. После успешной авторизации пользователь должен увидеть таблицу с данными.
+3. После перезагрузки страницы пользователь должен оставаться авторизован
+4. Возможность добавить в таблицу новую запись
+5. Новая записать в таблице должна появляться сразу
+6. Возможность удалить запись
+7. Удаленная записать должна сразу исчезнуть из таблицы
+8. Возможность изменить запись
+9. Изменения должны сразу отображаться в таблице
+10. Приложение должно корректно сообщать пользователю об ошибках заполнения форм или неудачных запросах к серверу
+11. Во время получения и отправки данных на сервер пользователю должны быть показаны индикаторы процесса загрузки/отправки (прогресс бары, спиннеры) данных
