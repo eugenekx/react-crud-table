@@ -89,7 +89,8 @@ export default function SignIn(props: {
         "Content-Type": "application/json; charset=UTF-8",
       },
     };
-    const query = fetch(`${props.host}/data/v3/testmethods/docs/login`, options)
+
+    fetch(`${props.host}/data/v3/testmethods/docs/login`, options)
       .then((response) => response.json())
       .then((data) => {
         if (data.error_code === 0) {

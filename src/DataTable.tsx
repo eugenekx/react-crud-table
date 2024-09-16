@@ -231,7 +231,7 @@ export default function DataTable(props: {
         "x-auth": props.authToken,
       },
     };
-    const query = fetch(
+    fetch(
       `${props.host}/ru/data/v3/testmethods/docs/userdocs/delete/${id}`,
       options
     )
@@ -300,7 +300,8 @@ export default function DataTable(props: {
         "x-auth": props.authToken,
       },
     };
-    const query = fetch(`${props.host}${url}`, options)
+
+    fetch(`${props.host}${url}`, options)
       .then((response) => response.json())
       .then((data) => {
         if (data.error_code !== 0) {
@@ -344,10 +345,8 @@ export default function DataTable(props: {
         "x-auth": props.authToken,
       },
     };
-    const query = fetch(
-      `${props.host}/ru/data/v3/testmethods/docs/userdocs/get`,
-      options
-    )
+
+    fetch(`${props.host}/ru/data/v3/testmethods/docs/userdocs/get`, options)
       .then((response) => response.json())
       .then((data) => {
         const processedData = data.data.map(

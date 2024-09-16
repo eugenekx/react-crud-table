@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/apptheme.tsx","./src/datatable.tsx","./src/signin.tsx","./src/main.tsx","./src/themeprimitives.ts","./src/vite-env.d.ts","./src/customizations/datadisplay.tsx","./src/customizations/feedback.tsx","./src/customizations/inputs.tsx","./src/customizations/navigation.tsx","./src/customizations/surfaces.ts"],"version":"5.6.2"}
