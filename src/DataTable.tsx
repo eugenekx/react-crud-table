@@ -89,11 +89,11 @@ export default function DataTable(props: {
   authToken: string;
 }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [isUpdatingData, setIsUpdatingData] = useState(true);
+  const [isUpdatingData, setIsUpdatingData] = useState(false);
   const [serverError, setServerError] = useState(false);
   const [serverErrorMessage, setServerErrorMessage] = useState("");
 
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState<GridRowModel[]>([]);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
   const columns: GridColDef[] = [
@@ -220,7 +220,7 @@ export default function DataTable(props: {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const deleteRowOnServer = (id) => {
+  const deleteRowOnServer = (id: GridRowId) => {
     setIsUpdatingData(true);
     setServerError(false);
     setServerErrorMessage("");
@@ -251,8 +251,6 @@ export default function DataTable(props: {
 
   const handleDeleteClick = (id: GridRowId) => () => {
     deleteRowOnServer(id);
-    console.log(id);
-    console.log(rows);
     setRows(rows.filter((row) => row.id !== id));
   };
 
@@ -268,7 +266,7 @@ export default function DataTable(props: {
     }
   };
 
-  const createOrUpdateRowOnServer = (row, url) => {
+  const createOrUpdateRowOnServer = (row: GridRowModel, url: string) => {
     setIsUpdatingData(true);
     setServerError(false);
     setServerErrorMessage("");

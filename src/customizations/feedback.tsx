@@ -18,6 +18,7 @@ export const feedbackCustomizations: Components<Theme> = {
           border: `1px solid ${alpha(gray[800], 1.0)}`,
         }),
       }),
+      action: { paddingTop: 0 },
     },
   },
   MuiDialog: {

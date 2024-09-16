@@ -12,6 +12,10 @@ import { styled } from "@mui/material/styles";
 import AppTheme from "./AppTheme";
 import Cookies from "js-cookie";
 import Snackbar from "@mui/material/Snackbar";
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
+
+const TEST_TOKEN = "supersecrettoken_for_user8";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -60,9 +64,18 @@ export default function SignIn(props: {
   const [usernameErrorMessage, setusernameErrorMessage] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
+  const [serverError, setServerError] = React.useState(false);
+  const [serverErrorMessage, setServerErrorMessage] = React.useState("");
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!validateInputs()) {
+      return;
+    }
+
+    setIsLoading(true);
     const data = new FormData(event.currentTarget);
 
     const params = {
@@ -94,12 +107,13 @@ export default function SignIn(props: {
               setPasswordErrorMessage(data.error_text);
           }
         }
-        console.log(data);
       })
       .catch((error) => {
-        console.log(error);
-        setPasswordError(true);
-        setPasswordErrorMessage("Server Error");
+        setServerError(true);
+        setServerErrorMessage(error.toString());
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -128,6 +142,11 @@ export default function SignIn(props: {
     }
 
     return isValid;
+  };
+
+  const activateTestMode = () => {
+    Cookies.set("auth", TEST_TOKEN);
+    props.setAuthToken(TEST_TOKEN);
   };
 
   return (
@@ -190,16 +209,31 @@ export default function SignIn(props: {
                 color={passwordError ? "error" : "primary"}
               />
             </FormControl>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              onClick={validateInputs}
-            >
-              Sign in
+            <Button type="submit" fullWidth variant="contained">
+              {isLoading ? <CircularProgress size={20} /> : "Sign in"}
             </Button>
           </Box>
         </Card>
+        <Snackbar
+          open={serverError}
+          onClose={() => {
+            setServerError(false);
+            setServerErrorMessage("");
+          }}
+        >
+          <Alert
+            severity="error"
+            variant="filled"
+            sx={{ width: "100%" }}
+            action={
+              <Button color="inherit" size="small" onClick={activateTestMode}>
+                TEST MODE
+              </Button>
+            }
+          >
+            {serverErrorMessage}
+          </Alert>
+        </Snackbar>
       </SignInContainer>
     </AppTheme>
   );
